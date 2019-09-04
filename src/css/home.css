@@ -1,0 +1,117 @@
+.home-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: white;
+}
+
+.title-bar {
+    display: grid;
+    grid-template-columns: 20% auto 20%;
+    background: rgb(226, 224, 224);
+    border-radius: 0px 0px 50px 50px;
+}
+
+.title {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.app-info-home {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+}
+
+.app-name-home {
+    margin-bottom: 0em;
+}
+
+.motto-wrapper-home {
+    display: flex;
+    align-items: flex-start;
+}
+
+.motto-home {
+    margin-top: 0em;
+    padding-top: 0em;
+}
+
+.motto-chkbox-home {
+    height: 50%;
+}
+
+.account-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-body {
+    display: grid;
+    flex-grow: 10;
+    background: white;
+    grid-template-columns: 5% auto 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.category-list-grid {
+    display: grid;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    overflow-y: scroll;
+    grid-column-gap: 2%;
+    grid-row-gap: 5%;
+    grid-auto-flow: row;
+}
+
+.category-list {
+    display: flex;
+    grid-column-start: 2;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: space-around;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    background: whitesmoke;
+    min-height: 20%;
+    min-width: 25%;
+    justify-content: center;
+    align-items: center;
+    border-left: solid 1px grey;
+    border-right: solid 1px grey;
+    border-radius: 10%;
+}
+
+.plus-button {
+    font-size: 2em;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 40%;
+    outline:none;
+}
+
+.plus-button:active {
+    background-color: black;
+    color: white;
+    outline:none;
+}
+
+.category-input {
+    display: flex;
+    width: 90%;
+}
+.list-input {
+    width:100%;
+    height: 90%;
+    margin-right: 10px;
+    border: none;
+}

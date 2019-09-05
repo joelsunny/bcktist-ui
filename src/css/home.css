@@ -75,7 +75,7 @@
     overflow-y: scroll;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    align-content: space-around;
+    align-content: center;
 }
 
 .category {
@@ -89,7 +89,11 @@
     border-left: solid 1px grey;
     border-right: solid 1px grey;
     border-radius: 10%;
+    margin: 10px;
 }
+ .category:active {
+    background: white;
+ }
 
 .plus-button {
     font-size: 2em;

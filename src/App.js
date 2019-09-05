@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Auth from './Auth';
 import UserHome from './Home';
+import List from './List'
 
 class App extends React.Component {
 
@@ -17,7 +18,7 @@ class App extends React.Component {
   render() {
     let HomeScreen;
     if (this.state.is_authenticated) {
-      HomeScreen = <UserHome />;
+      HomeScreen = <List />;
     } else {
       HomeScreen = <Auth />;
     }
@@ -25,7 +26,7 @@ class App extends React.Component {
         {HomeScreen}
     )
   }
-  
+
 }
 
 export default App;

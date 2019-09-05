@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import Auth from './Auth';
 import Home from './Home'
 
+global.base_url = "http://localhost:3001/";
+
 ReactDOM.render(<Home />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

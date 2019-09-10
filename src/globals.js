@@ -1,3 +1,3 @@
-const base_url = "https://192.168.0.111:3001/";
+const base_url = "https://bcktlist-api.herokuapp.com/";
 
 export default base_url;

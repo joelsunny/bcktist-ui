@@ -25,6 +25,15 @@
     color: white;
 }
 
+.delete-button {
+    background: floralwhite;
+}
+
+.delete-button:active {
+    background: black;
+    color: white;
+}
+
 .list-body-wrapper {
     flex-grow: 10;
     display: flex;
@@ -85,4 +94,23 @@
     border-radius: 10%;
     overflow: auto;
     word-wrap: break-word;
+}
+
+.item-input-text {
+    width:85%;
+    overflow: scroll;
+}
+
+.plus-button {
+    font-size: 2em;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 40%;
+    outline:none;
+}
+
+.plus-button:active {
+    background-color: black;
+    color: white;
+    outline:none;
 }

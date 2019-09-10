@@ -13,17 +13,34 @@ class App extends React.Component {
       is_authenticated: Auth.getAuthStatus()
     }
 
+    this.LoginHandler = this.LoginHandler.bind(this)
+    this.LogoutHandler = this.LogoutHandler.bind(this)
+
+  }
+
+  async LoginHandler() {
+    this.setState({
+      is_authenticated:true
+    })
+  }
+
+  async LogoutHandler() {
+    this.setState({
+      is_authenticated:true
+    })
   }
 
   render() {
     let HomeScreen;
     if (this.state.is_authenticated) {
-      HomeScreen = <List />;
+      HomeScreen = <UserHome />;
     } else {
-      HomeScreen = <Auth />;
+      HomeScreen = <Auth onLogin={this.LoginHandler} onLogout={this.LogoutHandler}/>;
     }
     return(
+      <>
         {HomeScreen}
+      </>
     )
   }
 

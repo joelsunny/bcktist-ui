@@ -1,6 +1,8 @@
 import React from 'react'
 import './css/home.css'
 import List from './List'
+import base_url from './globals'
+import Auth from './Auth'
 
 class CreateCategory extends React.Component {
 
@@ -20,9 +22,9 @@ class CreateCategory extends React.Component {
         // send post request to API, if success, change the parent state and change back to default view
         console.log('handling category creation');
         let new_category = document.getElementById("cat-input").value;
-        categories.push(new_category);
-        console.log(categories);
-
+        if (new_category === "") {
+            return
+        }
         this.setState(() => {
             return(
                 {mode:'default'}
@@ -83,7 +85,7 @@ class CreateCategory extends React.Component {
 
 function CategoryInfo(props) {
 
-    const category_list = categories.map((item) => <div onClick={() => { props.ClickHandler(item)} } className="category"> <p> {item} </p> </div>); 
+    const category_list = props.categories.map((item) => <div onClick={() => { props.ClickHandler(item)} } className="category"> <p> {item} </p> </div>); 
 
     return(
         <div className="category-list">
@@ -99,19 +101,48 @@ class UserHome extends React.Component {
 
         this.state = {
             view : 'home',
-            categories : ['groceries', 'work', 'gym'],
+            categories : [],
             selected: null
         }
 
         this.categoryCreationHandler = this.categoryCreationHandler.bind(this);
         this.viewHandler = this.viewHandler.bind(this);
         this.backButtonHandler = this.backButtonHandler.bind(this);
+        this.getCategoryInfo = this.getCategoryInfo.bind(this);
 
+        this.getCategoryInfo();
     }
     
+    async getCategoryInfo() {
+        // function to fetch the user's categories from backend
+        const url = base_url + 'list';
+        console.log('url = ' +  url);
+        let res = await fetch(url, {
+            method: 'GET',
+            headers:{
+              'access_token': Auth.getAccessToken()
+            }
+          });
+        console.log(res.status);
+        if(res.status === 403 ) {
+            Auth.Handle_403()
+            return
+        };
+        let res_body = await res.json();
+        console.log('got response from server');
+        console.log(res_body);
+
+        this.setState(() => {
+            return({
+                categories : res_body
+            })
+        })
+    }
+
     backButtonHandler(event) {
 
         console.log('back button pressed');
+        this.getCategoryInfo();
         this.setState(() => {
             return(
                 {
@@ -123,7 +154,9 @@ class UserHome extends React.Component {
     }
 
     viewHandler(item) {
-        
+        // Handle view transition from home screen to category display when
+        // the user clicks a category. Passed to child component 'CategoryInfo'.
+
         console.log('selected ' + item);
 
         this.setState(() => {
@@ -134,7 +167,30 @@ class UserHome extends React.Component {
         })
     }
 
-    categoryCreationHandler(category) {
+    async categoryCreationHandler(category) {
+
+        const url = base_url + 'list/create';
+        console.log('url = ' +  url);
+        let data = {
+            category: category
+        };
+        console.log('creating new category');
+        let res = await fetch(url, {
+            method: 'POST',
+            headers:{
+              'access_token': Auth.getAccessToken(),
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          
+        if(res.status === 403 ) {
+            Auth.Handle_403()
+            return
+        };
+        let res_body = await res.json();
+        console.log(res_body);
+
         this.setState( (state) => {
             let cat_list = this.state.categories;
             cat_list.push(category);
@@ -146,14 +202,14 @@ class UserHome extends React.Component {
 
     render() {
 
-        let categry_display = <CategoryInfo ClickHandler={this.viewHandler} Handler={this.categoryCreationHandler}/>;
+        let categry_display = <CategoryInfo categories={this.state.categories} ClickHandler={this.viewHandler} Handler={this.categoryCreationHandler}/>;
         let header = <div className="title-bar">
                         <div className="title">
                             <div className="app-info-home">
                                 <h1 className="app-name-home"> bcktlist </h1>
                                 <div className="motto-wrapper-home">
                                     <div className="motto-chckbox-home">
-                                        <input type="checkbox" checked /> 
+                                        <input type="checkbox" checked readOnly/> 
                                     </div>
                                     <p className="motto-home"> organize your life </p>
                                 </div>

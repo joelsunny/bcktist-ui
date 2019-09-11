@@ -29,10 +29,18 @@ class LoginScreen extends React.Component {
         this.LoginHandler = this.LoginHandler.bind(this);
     }
 
-    static getAuthStatus() {
-        if(localStorage.auth_status === "true") {
-            return true
+    static async getAuthStatus() {
+        // only called from App Constructor
+        if(localStorage.access_token !== undefined) {
+            // TODO: add check to validate access token with google
+            let response = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + LoginScreen.getAccessToken())
+            if(response.ok) {
+                localStorage.setItem("auth_status", "true");
+                return true;
+            }
         }
+        localStorage.setItem("auth_status","false")
+        localStorage.removeItem("access_token");
         return(false)
     }
 
